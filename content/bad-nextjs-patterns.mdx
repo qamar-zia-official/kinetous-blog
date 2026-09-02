@@ -1,0 +1,89 @@
+---
+title: "Bad Next.js Patterns Are Killing Your Revenue"
+date: "2026-02-25"
+description: "Stop putting 'use client' everywhere in your application"
+tags: ["nextjs", "webdev", "performance", "Kinetous"]
+---
+
+# Bad Next.js Patterns Are Quietly Killing Your Revenue
+
+## The Problem
+
+Most **developers** use **_Next.js_** like React, which kills **revenue, SEO, and conversions** and causes business loss and customer distrust.
+They
+
+- Mark most components with "use client" directive — increased JS bundle size.
+- Fetch the data on the client side — slow page loads due to client-side latency.
+- Do not stream — waiting for long API calls results in slow server responses.
+  which makes their application perform worse than it should.
+  So what is the solution?
+
+## Solution
+
+The direct solution to all of the performance overheads is to use Next.js as Next.js.
+
+There are a few main bottlenecks that cause Next.js applications to perform slowly. Let's cover them one by one.
+
+### 1. "use client" fatigue
+
+- Many developers add the "use client" directive at the top level of a component because of some client-side functionality. This alone
+  - Makes the entire component a client component.
+  - All of its children become client components.
+  - More JS is sent to the browser.
+  - Due to client-side rendering, SEO performance goes down.
+    Like this:
+
+- instead what should be done is:
+
+  Here, I have moved the logic for creating motion elements to different
+  components and have SSRed the whole component. It will now render on the
+  server instead of the client.
+
+  ### 2. Fetching Data on the Client Side
+
+  One of the biggest benefits of using Next.js is that we can fetch data on the server side, cache that data, and send it in the form of final HTML to the user.
+
+- Server fetch → HTML streamed
+- Client fetch → hydration + waterfall
+  Instead of letting a user's device make 10 API calls, we do that heavy lifting on the server and send the data in one go to the user, resulting in faster load times, higher user satisfaction, higher conversion rates, better SEO due to server-rendered content, and better crawler efficiency.
+  But what if we need the data on the client side? Well, that's also not a big deal.
+  Here is a component that needs the data on the client side for sorting and other interactivity.
+
+In this component, I could use useEffect to fetch the data from another place
+but I preferred fetching data on the server in a parent component and then
+giving that data to the client component as a prop
+
+#### What This Did?
+
+Well, I have the best of both worlds: I can fetch the data on the edge (if using Cloudflare) instantly and pass that to a client component without sacrificing client interactivity for sorting things. This makes Next.js a superior choice to many other frameworks.
+
+### 3. Streaming
+
+Streaming is a very useful feature of React that was introduced in React 18 where React introduced SSR and concurrent rendering. This lets you load the page instantly while letting you fetch the data for slow components on the server. Here is how it works.
+
+#### What This Did?
+
+This lets your page load without waiting for that slow data to arrive and falls back to the ReactNode provided in the fallback prop. When the data has been fetched or the async function has resolved, it then loads and replaces that component. It uses the flight protocol to get the remaining parts of the components and partially hydrates the content afterward.
+
+---
+
+By optimizing your application this way you don't solve a technical application performance issue. Instead you:
+
+- Enhance the user experience
+- Benefits from better SEO and search engine visibility
+- And by the end of the day it drives you more revenue
+
+## Final Thought
+
+Next.js is not slow.
+
+Poor architectural decisions are.
+
+If your e-commerce site isn’t converting like it should,
+it’s not always a marketing problem.
+
+Sometimes it’s a rendering problem.
+
+At Kinetous, we specialize in performance-first Next.js architecture for e-commerce brands.
+
+If you’d like a performance audit, reach out.

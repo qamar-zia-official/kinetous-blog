@@ -49,27 +49,9 @@ export const services = [
 
 export const links: linkType[] = [
   {
-    label: "Home",
+    label: "Posts",
     link: "/",
     icon: HomeIcon,
-    drop: false,
-  },
-  {
-    label: "About",
-    link: "/about",
-    icon: HomeIcon,
-    drop: false,
-  },
-  {
-    label: "Blog",
-    link: "/blog",
-    icon: FaBlog,
-    drop: false,
-  },
-  {
-    label: "Contact",
-    link: "/contact",
-    icon: Contact,
     drop: false,
   },
   {

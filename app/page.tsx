@@ -1,11 +1,5 @@
 import Header from "./sections/header/header";
-import Port1 from "./sections/porfolio/port1";
-import OurServices from "./sections/our-services/our-services";
-import About from "./sections/about/about";
-import OurProcess from "./sections/our-process/our-process";
-import ContactForm from "./sections/contact/contact";
 import StructuredData from "@/components/seo/StructuredData";
-import SetSections from "../components/navbar/set-sections";
 
 export default function LandingPage() {
   // Enterprise Service schema to optimize search engine rich snippet ingestion
@@ -35,24 +29,8 @@ export default function LandingPage() {
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#070A12] text-white antialiased flex flex-col gap-4">
-      <SetSections
-        sections={[
-          { link: "#", label: "Top" },
-          { link: "#port1", label: "Portfolio 1" },
-          { link: "#services", label: "Services" },
-          { link: "#why", label: "Why Us" },
-          { link: "#process", label: "Our Process" },
-          { link: "#port2", label: "Portfolio 2" },
-          { link: "#contact", label: "Contact" },
-        ]}
-      />
       <StructuredData data={servicesSchema} />
       <Header />
-      <Port1 />
-      <OurServices />
-      <About />
-      <OurProcess />
-      <ContactForm />
     </main>
   );
 }

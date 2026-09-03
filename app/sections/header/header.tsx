@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import SectionHeading2 from "../section-heading";
 import Strip from "./strip";
+import { GrArticle } from "react-icons/gr";
 
 // ── Shared spring config ──────────────────────────────────────────────────────
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -35,17 +36,25 @@ export default function Header() {
             transition={{ duration: 0.5, ease: EASE }}
             className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em] text-blue-400/60 text-center"
           >
-            AI-Native E-Commerce Systems Studio
+AI-NATIVE E-COMMERCE SYSTEMS STUDIO
           </motion.span>
 
-          <div className="flex flex-col gap-1 sm:gap-2 leading-[1.05] font-sans font-[100] text-center">
+          <motion.span
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: EASE }}
+            className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em] text-blue-400/60 text-center"
+          >
+          Building in public
+          </motion.span>
+          <div className="flex flex-col gap-1 sm:gap-2 leading-[1.05] font-sans font-light text-center">
             {[
               {
-                text: "Build Systems That Move Your Business.",
+                text: "Building the systems behind",
                 color: "text-white",
               },
               {
-                text: "Engineered for Velocity.",
+                text: "an AI-native Shopify business.",
                 color: "text-blue-600",
               },
             ].map((line, i) => (
@@ -64,9 +73,9 @@ export default function Header() {
             transition={{ duration: 0.6, delay: 0.5, ease: EASE }}
             className="text-base sm:text-lg md:text-xl text-zinc-400 leading-relaxed text-center max-w-md sm:max-w-2xl md:max-w-4xl mx-auto"
           >
-            I design and build AI-powered systems for Shopify businesses that
-            automate repetitive operations, turn customer and product data
-            into action, and keep your business running around the clock.
+I document the engineering, automation,
+experiments, and decisions behind building
+and scaling the business.
           </motion.p>
 
           <motion.div
@@ -84,12 +93,11 @@ export default function Header() {
               transition={{ type: "spring", stiffness: 350, damping: 22 }}
               className="w-full sm:w-auto"
             >
-              <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-2xl text-base flex items-center justify-center gap-2 shadow-lg shadow-blue-600/25 border-none">
-                <FaWhatsapp size={18} />
-                Start a Conversation
+              <Button size="lg" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-2xl  flex items-center justify-center gap-2 shadow-lg shadow-blue-600/25 border-none">
+              <GrArticle />
+                Read The Latest Post 
               </Button>
             </motion.a>
-
             <motion.a
               href="#our-work"
               whileHover={{ y: -1 }}
@@ -97,13 +105,6 @@ export default function Header() {
               transition={{ type: "spring", stiffness: 350, damping: 22 }}
               className="w-full sm:w-auto"
             >
-              <Button
-                variant="outline"
-                className="w-full sm:w-auto border-white/10 text-zinc-300 font-bold px-6 py-3 rounded-2xl text-base flex items-center justify-center gap-2 hover:bg-white/5"
-              >
-                See What I Build
-                <ArrowRight size={16} />
-              </Button>
             </motion.a>
           </motion.div>
         </motion.div>

@@ -38,10 +38,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useScrollPN } from "./use-scroll-pn";
-import { useNavigation } from "./use-navigation";
 import { links } from "./nav-data";
-import { ourServicesData } from "@/app/sections/our-services/our-services-data";
 import logo from "@/public/logo mark white.svg";
 
 // Retracts the primary row when the secondary (section) nav is hidden.
@@ -190,7 +187,7 @@ function BrandMark() {
     >
       <Image src={logo} alt="" width={24} height={24} aria-hidden />
       <div className="relative h-[200%] font-sans font-semibold text-zinc-400 transition-transform duration-300 ease-out group-hover:-translate-y-1/2">
-        <span className="flex h-1/2 items-center text-2xl">inetous</span>
+        <span className="flex h-1/2 items-center text-2xl">inetous Blog</span>
         <span className="flex h-1/2 items-center text-base">
           <Breadcrumbs />
         </span>
@@ -240,34 +237,6 @@ function MobileNav() {
         <SheetHeader>
           <SheetTitle>Navigation</SheetTitle>
         </SheetHeader>
-
-        <div className="flex flex-col gap px-2">
-          {links.map((link) => (
-            <SheetClose
-              key={link.label}
-              render={
-                <Link href={link.link} className="flex items-center gap-2 p-4">
-                  {link.label}
-                </Link>
-              }
-            />
-          ))}
-        </div>
-
-        <div className="flex flex-col gap px-2">
-          <p className="px-4 py-4 text-xl font-bold">Services</p>
-          {ourServicesData.map((item) => (
-            <SheetClose
-              key={item.title}
-              render={
-                <Link href="/services" className="flex items-center gap-2 p-4">
-                  {item.title}
-                  <item.brandIcon />
-                </Link>
-              }
-            />
-          ))}
-        </div>
       </SheetContent>
     </Sheet>
   );
@@ -311,19 +280,10 @@ function SectionNav({
 // ---------------------------------------------------------------------------
 
 export default function Navbar() {
-  const { fixed } = useScrollPN();
   const isMobile = useIsMobile();
-  const { sections } = useNavigation();
-  const hasSections = sections.length > 0;
-  const showSections = !fixed && hasSections;
-
-  const retractOffset = isMobile
-    ? NAV_RETRACT_OFFSET.mobile
-    : NAV_RETRACT_OFFSET.desktop;
 
   return (
     <NavigationMenu
-      style={{ top: fixed || !hasSections ? "0px" : retractOffset }}
       className={cn(
         "sticky z-100 mx-auto flex flex-col justify-between overflow-hidden",
         "border-b border-white/30 bg-zinc-800/50/60 px-4 shadow-2xl",
@@ -339,8 +299,6 @@ export default function Navbar() {
 
         {isMobile ? <MobileNav /> : <DesktopLinks />}
       </div>
-
-      <SectionNav sections={sections} visible={showSections} />
     </NavigationMenu>
   );
 }

@@ -88,5 +88,4 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         <BlogBody content={ JSON.parse(post.body || "") as any} />
       </div>
     </article>
-  );
-}
+  )}

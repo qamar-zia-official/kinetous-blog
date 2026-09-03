@@ -188,9 +188,9 @@
 }
 
 /* 1. Standard Properties for Modern Browsers (Firefox) */
-html {
+* {
   scrollbar-width: thin; /* Options: auto | thin */
-  scrollbar-color: var(--color-blue-600) transparent; /* format: 'thumb_color track_color' */
+  scrollbar-color: var(--color-zinc-600) var(--color-zinc-800); /* format: 'thumb_color track_color' */
 }
 
 /* 2. WebKit Pseudo-elements for Chromium Browsers (Chrome, Edge, Safari) */
@@ -481,9 +481,12 @@ html::-webkit-scrollbar-thumb:hover {
 }
 .tableWrapper {
   overflow-x: scroll;
+  background: var(--color-zinc-900);
+  border-radius: 16px;
+  margin-block: 16px;
   table {
    th, td {
-    padding: 12px;
+    padding-inline: 6px;
     min-width: 300px;
     text-wrap: wrap;
     overflow-wrap: anywhere;
@@ -494,5 +497,6 @@ html::-webkit-scrollbar-thumb:hover {
 details {
   summary {
     cursor: pointer;
+    @apply bg-zinc-900 py-2 px-4 w-fit my-4 rounded-lg text-zinc-200;
   }
 }

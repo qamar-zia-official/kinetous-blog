@@ -41,7 +41,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useScrollPN } from "./use-scroll-pn";
 import { useNavigation } from "./use-navigation";
 import { links } from "./nav-data";
-import { ourServicesData } from "@/app/(company)/sections/our-services/our-services-data";
+import { ourServicesData } from "@/app/sections/our-services/our-services-data";
 import logo from "@/public/logo mark white.svg";
 
 // Retracts the primary row when the secondary (section) nav is hidden.

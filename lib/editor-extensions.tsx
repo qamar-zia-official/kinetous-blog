@@ -37,7 +37,9 @@ export const documentExtensions = [
     codeBlock: false,
   }),
   IFrame,
-  Details.Details,
+  Details.Details.configure({
+    persist: true,
+  }),
   Details.DetailsContent,
   Details.DetailsSummary,
   
@@ -54,7 +56,6 @@ export const documentExtensions = [
     table: {
       renderWrapper: true
     },
-    
   }),
 
   TextStyle,

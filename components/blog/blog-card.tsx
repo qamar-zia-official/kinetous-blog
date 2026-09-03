@@ -24,7 +24,7 @@ export function BlogCard({ post }: { post: BlogCardPost }) {
   const { minutes } = getReadingTime(post.body as any);
 
   return (
-    <Link href={`/blog/${post.slug}`} className="group block">
+    <Link href={`/posts/${post.slug}`} className="group block">
       <Card className="overflow-hidden rounded-3xl border-border bg-muted/20 py-0 transition-colors hover:border-foreground/20">
         {publicId ? (
           <div className="relative aspect-video overflow-hidden">

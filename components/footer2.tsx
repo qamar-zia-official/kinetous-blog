@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Card } from "./ui/card";
+import Image from "next/image";
 
 interface FooterLink {
   name: string;
@@ -42,34 +43,30 @@ const defaultProps: Footer2Props = {
     {
       title: "Product",
       links: [
-        { name: "Overview", href: "/overview" },
-        { name: "Pricing", href: "/pricing" },
-        { name: "Case studies", href: "/cases" },
+        { name: "Overview", href: "https://kinetous.com/overview" },
+        { name: "Pricing", href: "https://kinetous.com/pricing" },
+        { name: "Case studies", href: "https://kinetous.com/cases" },
       ],
     },
     {
       title: "Company",
       links: [
-        { name: "About", href: "/about" },
-        { name: "Experiments", href: "/experiments" },
-        { name: "Team", href: "/team" },
-        { name: "Blog", href: "/blog" },
-        { name: "Contact", href: "/contact" },
+        { name: "About", href: "https://kinetous.com/about" },
+        { name: "Blog", href: "https://blog.kinetous.com/" },
+        { name: "Contact", href: "https://kinetous.com/contact" },
       ],
     },
     {
       title: "Support",
       links: [
-        { name: "Help center", href: "/help" },
-        { name: "Documentation", href: "/docs" },
-        { name: "Community", href: "/community" },
+        { name: "Help center", href: "https://kinetous.com/help" },
       ],
     },
   ],
   copyright: "© 2024 Shadcnblocks.com. All rights reserved.",
   legalLinks: [
-    { name: "Terms and Conditions", href: "/terms" },
-    { name: "Privacy Policy", href: "/privacy" },
+    { name: "Terms and Conditions", href: "https://kinetous.com/terms" },
+    { name: "Privacy Policy", href: "https://kinetous.com/privacy" },
   ],
 };
 
@@ -91,9 +88,11 @@ const Footer2 = (props: Props) => {
             <div className="col-span-2 mb-8 lg:mb-0">
               <div className="flex items-center lg:justify-start">
                 <a href={logo?.url}>
-                  <img
-                    src={logo?.src}
-                    alt={logo?.alt}
+                  <Image
+                  width={64}
+                  height={64}
+                    src={logo?.src || ""}
+                    alt={logo?.alt || ""}
                     title={logo?.title}
                     className="h-7 dark:invert"
                   />

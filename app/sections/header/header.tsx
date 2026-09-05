@@ -13,6 +13,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 // ── Shared spring config ──────────────────────────────────────────────────────
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -111,10 +112,12 @@ export default function Header() {
                             </Button>
                         </motion.a>
                         <Dialog>
-                            <DialogTrigger>
-                                <Button variant="outline">
-                                    Want Something Built
-                                </Button>
+                            <DialogTrigger
+                                className={cn(
+                                    "rounded-full border-1 border-zinc-800 p-2 px-4",
+                                )}
+                            >
+                                Want Something Built
                             </DialogTrigger>
                             <DialogContent>
                                 <DialogHeader>

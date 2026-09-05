@@ -36,10 +36,9 @@ export const viewport: Viewport = {
 // 2. Global Metadata Configuration
 export const metadata: Metadata = {
     metadataBase: new URL("https://blog.kinetous.com"),
-    icons: "/logo4.svg",
+    icons: "/logo black circle.svg",
     title: {
-        default:
-            "Kinetous — Custom E-Commerce & Web Apps for Pakistani Businesses",
+        default: "Kinetous — Automations for shopify E-Commerce businesses",
         template: "%s | Kinetous",
     },
     description:

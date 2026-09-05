@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import ogImage from "@/public/blog og image.png";
 import "./globals.css";
 import "./custom.css";
 import logo from "@/public/logo black circle.svg";
@@ -13,153 +14,153 @@ import { NavigationProvider } from "./components/navbar/nav-context-provider";
 
 // Load Satoshi Locally
 const clashgrotestSans = localFont({
-  src: "../public/fonts/ClashGrotesk-Variable.woff2",
-  variable: "--font-clashgrotesk",
-  weight: "100 900",
+    src: "../public/fonts/ClashGrotesk-Variable.woff2",
+    variable: "--font-clashgrotesk",
+    weight: "100 900",
 });
 
 const inter = Inter({
-  subsets: ["latin", "cyrillic", "latin-ext", "greek"],
-  variable: "--font-inter",
-  weight: "variable",
+    subsets: ["latin", "cyrillic", "latin-ext", "greek"],
+    variable: "--font-inter",
+    weight: "variable",
 });
 
 // 1. Viewport Config (Isolated to support Next.js 14/15 standards)
 export const viewport: Viewport = {
-  themeColor: "#070A12",
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 5,
+    themeColor: "#070A12",
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
 };
 
 // 2. Global Metadata Configuration
 export const metadata: Metadata = {
-  metadataBase: new URL("https://Kinetous.com"),
-  icons: "/logo4.svg",
-  title: {
-    default:
-      "Kinetous — Custom E-Commerce & Web Apps for Pakistani Businesses",
-    template: "%s | Kinetous",
-  },
-  description:
-    "Kinetous builds high-performance custom e-commerce stores, custom software, and AI-powered web applications for Pakistani businesses. Scale your physical or digital business with reliable systems built by engineers.",
-  keywords: [
-    "web developer Pakistan",
-    "Next.js developer Pakistan",
-    "e-commerce development Pakistan",
-    "custom web app Pakistan",
-    "AI web development Pakistan",
-    "freelance developer Pakistan",
-    "online store development Pakistan",
-    "WooCommerce developer Pakistan",
-    "Next.js e-commerce store",
-    "custom website Pakistan",
-    "software development agency Pakistan",
-    "hire React developers Lahore",
-    "Pakistan technology partners",
-  ],
-  authors: [
-    {
-      name: "Kinetous",
-      url: "https://www.linkedin.com/company/Kinetous/",
+    metadataBase: new URL("https://blog.kinetous.com"),
+    icons: "/logo4.svg",
+    title: {
+        default:
+            "Kinetous — Custom E-Commerce & Web Apps for Pakistani Businesses",
+        template: "%s | Kinetous",
     },
-    {
-      name: "Qamar Zia",
-      url: "https://www.linkedin.com/in/qamar-zia-32389537b/",
-    },
-  ],
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title:
-      "Kinetous — AI Native FullStack E-Commerce Stores and AI Automations",
     description:
-      "From custom full-stack online stores to advanced internal tools and automated pipelines — we build high-converting systems that grow your business.",
-    url: "https://Kinetous.com",
-    siteName: "Kinetous",
-    locale: "en_US",
-    type: "website",
-    images: [
-      {
-        url: "/og-main.png",
-        width: 1200,
-        height: 630,
-        alt: "Kinetous — High-Performance Web Development and AI Apps in Pakistan",
-      },
+        "Kinetous builds high-performance custom e-commerce stores, custom software, and AI-powered web applications for Pakistani businesses. Scale your physical or digital business with reliable systems built by engineers.",
+    keywords: [
+        "web developer Pakistan",
+        "Next.js developer Pakistan",
+        "e-commerce development Pakistan",
+        "custom web app Pakistan",
+        "AI web development Pakistan",
+        "freelance developer Pakistan",
+        "online store development Pakistan",
+        "WooCommerce developer Pakistan",
+        "Next.js e-commerce store",
+        "custom website Pakistan",
+        "software development agency Pakistan",
+        "hire React developers Lahore",
+        "Pakistan technology partners",
     ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title:
-      "Kinetous — AI Native FullStack E-Commerce Stores and AI Automations",
-    description:
-      "From custom full-stack online stores to advanced internal tools and automated pipelines — we build high-converting systems that grow your business.",
-    images: ["/og-main.png"],
-  },
-  verification: {
-    google: "google-site-verification-placeholder-code", // Replace with your actual search console token
-  },
+    authors: [
+        {
+            name: "Kinetous",
+            url: "https://www.linkedin.com/company/Kinetous/",
+        },
+        {
+            name: "Qamar Zia",
+            url: "https://www.linkedin.com/in/qamar-zia-32389537b/",
+        },
+    ],
+    alternates: {
+        canonical: "/",
+    },
+    openGraph: {
+        title: "Kinetous — AI Native FullStack E-Commerce Stores and AI Automations",
+        description:
+            "From custom full-stack online stores to advanced internal tools and automated pipelines — we build high-converting systems that grow your business.",
+        url: "https://Kinetous.com",
+        siteName: "Kinetous",
+        locale: "en_US",
+        type: "website",
+        images: [
+            {
+                url: ogImage.src,
+                width: 1200,
+                height: 630,
+                alt: "Kinetous — High-Performance Web Development and AI Apps in Pakistan",
+            },
+        ],
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Kinetous — AI Native FullStack E-Commerce Stores and AI Automations",
+        description:
+            "From custom full-stack online stores to advanced internal tools and automated pipelines — we build high-converting systems that grow your business.",
+        images: [ogImage.src],
+    },
+    verification: {
+        google: "google-site-verification-placeholder-code", // Replace with your actual search console token
+    },
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  // Structured Organization and LocalBusiness Entity data representation (Pakistan Local SEO Focus)
-  const organizationSchema = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://Kinetous.com/#organization",
-        name: "Kinetous",
-        url: "https://Kinetous.com",
-        logo: {
-          "@type": "ImageObject",
-          url: "https://Kinetous.com/logo.png",
-          caption: "Kinetous Emblem",
-        },
-        sameAs: [
-          "https://www.linkedin.com/company/Kinetous/",
-          "https://www.linkedin.com/in/qamar-zia-32389537b/",
+    // Structured Organization and LocalBusiness Entity data representation (Pakistan Local SEO Focus)
+    const organizationSchema = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "https://Kinetous.com/#organization",
+                name: "Kinetous",
+                url: "https://Kinetous.com",
+                logo: {
+                    "@type": "ImageObject",
+                    url: "https://Kinetous.com/logo.png",
+                    caption: "Kinetous Emblem",
+                },
+                sameAs: [
+                    "https://www.linkedin.com/company/Kinetous/",
+                    "https://www.linkedin.com/in/qamar-zia-32389537b/",
+                ],
+            },
+            {
+                "@type": "ProfessionalService",
+                "@id": "https://Kinetous.com/#localbusiness",
+                parentOrganization: {
+                    "@id": "https://Kinetous.com/#organization",
+                },
+                name: "Kinetous HQ",
+                image: "https://Kinetous.com/og-main.png",
+                priceRange: "$$$",
+                telephone: "+92-300-XXXXXXX", // Add your contact phone number here
+                address: {
+                    "@type": "PostalAddress",
+                    addressLocality: "Lahore",
+                    addressRegion: "Punjab",
+                    addressCountry: "PK",
+                },
+                geo: {
+                    "@type": "GeoCoordinates",
+                    latitude: "31.5204",
+                    longitude: "74.3587",
+                },
+            },
         ],
-      },
-      {
-        "@type": "ProfessionalService",
-        "@id": "https://Kinetous.com/#localbusiness",
-        parentOrganization: { "@id": "https://Kinetous.com/#organization" },
-        name: "Kinetous HQ",
-        image: "https://Kinetous.com/og-main.png",
-        priceRange: "$$$",
-        telephone: "+92-300-XXXXXXX", // Add your contact phone number here
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: "Lahore",
-          addressRegion: "Punjab",
-          addressCountry: "PK",
-        },
-        geo: {
-          "@type": "GeoCoordinates",
-          latitude: "31.5204",
-          longitude: "74.3587",
-        },
-      },
-    ],
-  };
+    };
 
-  return (
-    <html lang="en" style={{ scrollBehavior: "smooth" }}>
-      <head>
-        <StructuredData data={organizationSchema} />
-      </head>
-      <body
-        className={`dark bg-zinc-950 ${clashgrotestSans.variable} ${inter.className} font-mono [font-variant-ligatures:contextual] m-auto antialiased scrollbar scrollbar-thumb-blue-500 scrollbar-track-slate-100`}
-      >
-        <div
-          style={{
-            background: `linear-gradient(to right, 
+    return (
+        <html lang="en" style={{ scrollBehavior: "smooth" }}>
+            <head>
+                <StructuredData data={organizationSchema} />
+            </head>
+            <body
+                className={`dark bg-zinc-950 ${clashgrotestSans.variable} ${inter.className} font-mono [font-variant-ligatures:contextual] m-auto antialiased scrollbar scrollbar-thumb-blue-500 scrollbar-track-slate-100`}
+            >
+                <div
+                    style={{
+                        background: `linear-gradient(to right,
     var(--color-slate-50), var(--color-slate-100), var(--color-slate-200), var(--color-slate-300), var(--color-slate-400), var(--color-slate-500), var(--color-slate-600), var(--color-slate-700), var(--color-slate-800), var(--color-slate-900), var(--color-slate-950),
     var(--color-gray-50), var(--color-gray-100), var(--color-gray-200), var(--color-gray-300), var(--color-gray-400), var(--color-gray-500), var(--color-gray-600), var(--color-gray-700), var(--color-gray-800), var(--color-gray-900), var(--color-gray-950),
     var(--color-zinc-50), var(--color-zinc-100), var(--color-zinc-200), var(--color-zinc-300), var(--color-zinc-400), var(--color-zinc-500), var(--color-zinc-600), var(--color-zinc-700), var(--color-zinc-800), var(--color-zinc-900), var(--color-zinc-950),
@@ -183,20 +184,20 @@ export default function RootLayout({
     var(--color-pink-50), var(--color-pink-100), var(--color-pink-200), var(--color-pink-300), var(--color-pink-400), var(--color-pink-500), var(--color-pink-600), var(--color-pink-700), var(--color-pink-800), var(--color-pink-900), var(--color-pink-950),
     var(--color-rose-50), var(--color-rose-100), var(--color-rose-200), var(--color-rose-300), var(--color-rose-400), var(--color-rose-500), var(--color-rose-600), var(--color-rose-700), var(--color-rose-800), var(--color-rose-900), var(--color-rose-950)
   )`,
-          }}
-        ></div>
-        <BotProvider>
-          <NavigationProvider>
-            <Navbar />
-            <ViewTransition>{children}</ViewTransition>
-            <Footer2
-              logo={logo}
-              copyright="Kinetous"
-              description="Kinetous - FullStack AI Native E-Commmerce Product and Automation studio"
-            ></Footer2>
-          </NavigationProvider>
-        </BotProvider>
-      </body>
-    </html>
-  );
+                    }}
+                ></div>
+                <BotProvider>
+                    <NavigationProvider>
+                        <Navbar />
+                        <ViewTransition>{children}</ViewTransition>
+                        <Footer2
+                            logo={logo}
+                            copyright="Kinetous"
+                            description="Kinetous - FullStack AI Native E-Commmerce Product and Automation studio"
+                        ></Footer2>
+                    </NavigationProvider>
+                </BotProvider>
+            </body>
+        </html>
+    );
 }

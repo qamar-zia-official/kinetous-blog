@@ -1,8 +1,17 @@
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import type { Metadata } from "next";
+import { DEFAULT_DESCRIPTION } from "@/lib/seo-config";
 
-export const metadata = { title: "Blog",
-  description: "Writing on things I'm building and learning.",
+// This was the generic "Writing on things I'm building and learning."
+// placeholder copy, which doesn't match the brand voice used everywhere
+// else (Kinetous / e-commerce automation) and gave every page under this
+// layout that hadn't defined its own metadata (i.e. every blog listing/tag
+// view) an off-brand description in search results. Individual post pages
+// still override this via their own generateMetadata.
+export const metadata: Metadata = {
+  title: "Blog",
+  description: DEFAULT_DESCRIPTION,
 };
 
 export default function Layout({

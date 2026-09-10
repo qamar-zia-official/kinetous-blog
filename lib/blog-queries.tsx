@@ -70,3 +70,17 @@ export async function getAllPublishedPosts() {
         totalPages: Math.max(1, Math.ceil(Number(count) / PAGE_SIZE)),
     };
 }
+
+// Used by the account dashboard so a logged-in author can see (and get
+// edit links to) their own posts, including unpublished drafts — this is
+// intentionally *not* filtered by `visible`, since the whole point is to
+// show the author their own drafts too. Access to this data is gated by
+// requiring a real session id server-side (see app/account/dashboard/page.tsx),
+// never by trusting a client-supplied authorId.
+export async function getPostsByAuthor(authorId: string) {
+    return db
+        .select()
+        .from(blogTable)
+        .where(eq(blogTable.authorId, authorId))
+        .orderBy(desc(blogTable.updatedAt));
+}

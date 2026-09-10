@@ -1,23 +1,28 @@
 import Header from "./sections/header/header";
 import StructuredData from "@/components/seo/StructuredData";
+import {
+    DEFAULT_DESCRIPTION,
+    SCHEMA_IDS,
+    SITE_NAME,
+    SITE_URL,
+} from "@/lib/seo-config";
 
 export default function LandingPage() {
-    // Enterprise Service schema to optimize search engine rich snippet ingestion
+    // WebSite schema, now built from the same SCHEMA_IDS used in
+    // app/layout.tsx and (blog)/posts/page.tsx — this @id has to match
+    // exactly wherever it's referenced (isPartOf in the Blog schema, etc.)
+    // for Google to treat them as the same entity.
     const websiteSchema = {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "@id": "https://blog.kinetous.com/#website",
-
-        name: "Kinetous Blog",
-        url: "https://blog.kinetous.com",
-
-        description:
-            "The engineering, experiments, systems, and lessons behind building an AI-native e-commerce business.",
+        "@id": SCHEMA_IDS.website,
+        name: SITE_NAME,
+        url: SITE_URL,
+        description: DEFAULT_DESCRIPTION,
         publisher: {
             "@type": "Organization",
-            "@id": "https://kinetous.com/#organization",
+            "@id": SCHEMA_IDS.organization,
         },
-
         inLanguage: "en",
     };
 

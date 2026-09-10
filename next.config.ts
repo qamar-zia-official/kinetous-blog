@@ -37,6 +37,12 @@ const nextConfig: NextConfig = {
                 port: "",
                 pathname: "/**",
             },
+            {
+                protocol: "https",
+                hostname: "*.googleusercontent.com", // Pexels CDN host
+                port: "",
+                pathname: "/**",
+            },
         ],
     },
     transpilePackages: ["next-mdx-remote"],

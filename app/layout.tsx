@@ -11,6 +11,24 @@ import StructuredData from "@/components/seo/StructuredData";
 import { Footer2 } from "@/components/footer2";
 import Navbar from "./components/navbar/nav";
 import { NavigationProvider } from "./components/navbar/nav-context-provider";
+import {
+    AUTHORS,
+    COMPANY_NAME,
+    COMPANY_URL,
+    DEFAULT_DESCRIPTION,
+    DEFAULT_TITLE,
+    GOOGLE_SITE_VERIFICATION,
+    HOME_OG_DESCRIPTION,
+    HOME_OG_TITLE,
+    KEYWORDS,
+    LOGO_PATH,
+    SCHEMA_IDS,
+    SITE_NAME,
+    SITE_URL,
+    SOCIAL_LINKS,
+    BUSINESS_ADDRESS,
+    BUSINESS_PHONE,
+} from "@/lib/seo-config";
 
 // Load Satoshi Locally
 const clashgrotestSans = localFont({
@@ -34,49 +52,49 @@ export const viewport: Viewport = {
 };
 
 // 2. Global Metadata Configuration
+//
+// Everything here now pulls from lib/seo-config.ts instead of being
+// hand-typed. The old version had `metadataBase: new URL("https://blog.kinetous.com")`
+// (lowercase) but `openGraph.url: "https://Kinetous.com"` (uppercase K, and
+// a *different domain* — the parent company site, not this blog). Search
+// engines and social scrapers treat those as distinct hosts, which
+// undermines canonicalization and can split authority/verification between
+// two "versions" of the same brand. This blog's own pages now consistently
+// point at SITE_URL (blog.kinetous.com); COMPANY_URL is only used where we
+// mean the actual separate company site (sameAs / parentOrganization links).
 export const metadata: Metadata = {
-    metadataBase: new URL("https://blog.kinetous.com"),
-    icons: "/logo black circle.svg",
+    metadataBase: new URL(SITE_URL),
+    icons: LOGO_PATH,
     title: {
-        default: "Kinetous — Automations for shopify E-Commerce businesses",
-        template: "%s | Kinetous",
+        default: DEFAULT_TITLE,
+        template: "%s | " + SITE_NAME,
     },
-    description:
-        "Kinetous builds high-performance custom e-commerce stores, custom software, and AI-powered web applications for Pakistani businesses. Scale your physical or digital business with reliable systems built by engineers.",
-    keywords: [
-        "web developer Pakistan",
-        "Next.js developer Pakistan",
-        "e-commerce development Pakistan",
-        "custom web app Pakistan",
-        "AI web development Pakistan",
-        "freelance developer Pakistan",
-        "online store development Pakistan",
-        "WooCommerce developer Pakistan",
-        "Next.js e-commerce store",
-        "custom website Pakistan",
-        "software development agency Pakistan",
-        "hire React developers Lahore",
-        "Pakistan technology partners",
-    ],
-    authors: [
-        {
-            name: "Kinetous",
-            url: "https://www.linkedin.com/company/Kinetous/",
+    description: DEFAULT_DESCRIPTION,
+    keywords: KEYWORDS,
+    authors: AUTHORS,
+    creator: COMPANY_NAME,
+    publisher: COMPANY_NAME,
+    // Explicit default so nothing ever inherits an accidental noindex from
+    // a nested layout; individual pages (drafts, filtered/paginated blog
+    // views) override this where they actually need to.
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+            "max-image-preview": "large",
+            "max-snippet": -1,
         },
-        {
-            name: "Qamar Zia",
-            url: "https://www.linkedin.com/in/qamar-zia-32389537b/",
-        },
-    ],
+    },
     alternates: {
         canonical: "/",
     },
     openGraph: {
-        title: "Kinetous — AI Native FullStack E-Commerce Stores and AI Automations",
-        description:
-            "From custom full-stack online stores to advanced internal tools and automated pipelines — we build high-converting systems that grow your business.",
-        url: "https://Kinetous.com",
-        siteName: "Kinetous",
+        title: HOME_OG_TITLE,
+        description: HOME_OG_DESCRIPTION,
+        url: SITE_URL,
+        siteName: SITE_NAME,
         locale: "en_US",
         type: "website",
         images: [
@@ -90,13 +108,15 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Kinetous — AI Native FullStack E-Commerce Stores and AI Automations",
-        description:
-            "From custom full-stack online stores to advanced internal tools and automated pipelines — we build high-converting systems that grow your business.",
+        title: HOME_OG_TITLE,
+        description: HOME_OG_DESCRIPTION,
         images: [ogImage.src],
+        // TODO: set to the real @handle once one exists — without it,
+        // Twitter/X falls back to a generic card with no attribution.
+        // site: "@kinetous",
     },
     verification: {
-        google: "google-site-verification-placeholder-code", // Replace with your actual search console token
+        google: GOOGLE_SITE_VERIFICATION, // TODO: replace with your real Search Console token
     },
 };
 
@@ -105,45 +125,50 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    // Structured Organization and LocalBusiness Entity data representation (Pakistan Local SEO Focus)
+    // Structured Organization and LocalBusiness entity data (Pakistan local
+    // SEO focus). Previously this block hardcoded "https://Kinetous.com/..."
+    // (uppercase K) for every @id and url, which is a *different string*
+    // than the SITE_URL used in metadataBase/canonical above — since @id
+    // values are how Google stitches separate JSON-LD blocks on different
+    // pages into one graph, any casing drift here silently breaks that
+    // linkage. It also pointed logo/image at "/logo.png" and "/og-main.png",
+    // neither of which exists in /public. Now sourced from seo-config.ts,
+    // which uses real, existing assets.
     const organizationSchema = {
         "@context": "https://schema.org",
         "@graph": [
             {
                 "@type": "Organization",
-                "@id": "https://Kinetous.com/#organization",
-                name: "Kinetous",
-                url: "https://Kinetous.com",
+                "@id": SCHEMA_IDS.organization,
+                name: COMPANY_NAME,
+                url: COMPANY_URL,
                 logo: {
                     "@type": "ImageObject",
-                    url: "https://Kinetous.com/logo.png",
-                    caption: "Kinetous Emblem",
+                    url: `${COMPANY_URL}${LOGO_PATH}`,
+                    caption: `${COMPANY_NAME} Emblem`,
                 },
-                sameAs: [
-                    "https://www.linkedin.com/company/Kinetous/",
-                    "https://www.linkedin.com/in/qamar-zia-32389537b/",
-                ],
+                sameAs: SOCIAL_LINKS,
             },
             {
                 "@type": "ProfessionalService",
-                "@id": "https://Kinetous.com/#localbusiness",
+                "@id": SCHEMA_IDS.localBusiness,
                 parentOrganization: {
-                    "@id": "https://Kinetous.com/#organization",
+                    "@id": SCHEMA_IDS.organization,
                 },
-                name: "Kinetous HQ",
-                image: "https://Kinetous.com/og-main.png",
+                name: `${COMPANY_NAME} HQ`,
+                image: `${COMPANY_URL}${LOGO_PATH}`,
                 priceRange: "$$$",
-                telephone: "+92-300-XXXXXXX", // Add your contact phone number here
+                telephone: BUSINESS_PHONE, // TODO: replace placeholder before launch
                 address: {
                     "@type": "PostalAddress",
-                    addressLocality: "Lahore",
-                    addressRegion: "Punjab",
-                    addressCountry: "PK",
+                    addressLocality: BUSINESS_ADDRESS.locality,
+                    addressRegion: BUSINESS_ADDRESS.region,
+                    addressCountry: BUSINESS_ADDRESS.country,
                 },
                 geo: {
                     "@type": "GeoCoordinates",
-                    latitude: "31.5204",
-                    longitude: "74.3587",
+                    latitude: BUSINESS_ADDRESS.latitude,
+                    longitude: BUSINESS_ADDRESS.longitude,
                 },
             },
         ],

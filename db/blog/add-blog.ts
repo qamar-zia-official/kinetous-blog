@@ -5,6 +5,7 @@ import { db } from "../index";
 import { blogTable } from "../schemas/schema";
 import { insertBlogSchema } from "./blog-schema";
 import { ok, fail, type ActionResult } from "./result";
+import { requireUser, AuthError } from "@/lib/auth-guard";
 
 function slugify(title: string) {
   return title
@@ -17,8 +18,23 @@ function slugify(title: string) {
 export async function addBlog(
   input: typeof blogTable.$inferInsert
 ): Promise<ActionResult<typeof blogTable.$inferSelect>> {
+  let user;
+  try {
+    user = await requireUser();
+  } catch (e) {
+    if (e instanceof AuthError) return fail(e);
+    throw e;
+  }
+
   const parsed = insertBlogSchema.safeParse({
     ...input,
+    // `authorId` is forced to the logged-in user's id here, overriding
+    // whatever the client sent. Previously `input.authorId` (fully
+    // client-controlled) was passed straight through to the insert — any
+    // caller could publish a post attributed to any user id, including
+    // someone else's, which would also have let them "own" and later edit
+    // that post once ownership checks were added.
+    authorId: user.id,
     slug: input.slug || slugify(input.title),
   });
 

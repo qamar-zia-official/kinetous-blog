@@ -10,23 +10,23 @@ import { DEFAULT_DESCRIPTION } from "@/lib/seo-config";
 // view) an off-brand description in search results. Individual post pages
 // still override this via their own generateMetadata.
 export const metadata: Metadata = {
-  title: "Blog",
-  description: DEFAULT_DESCRIPTION,
+    title: "Blog",
+    description: DEFAULT_DESCRIPTION,
 };
 
 export default function Layout({
-  children,
+    children,
 }: Readonly<{ children: React.ReactNode }>) {
-  return (
-    <main className="max-w-300 m-auto">
-      <div className="border-y-2 border-zinc-800 p-2 w-full">
-        <Button variant="outline">
-          <ArrowLeft /> Back to Blog
-        </Button>
-      </div>
-      <div className="m-auto flex flex-col justify-center items-center">
-        {children}
-      </div>
-    </main>
-  );
+    return (
+        <main className="max-w-300 m-auto pt-32">
+            <div className="border-y-2 border-zinc-800 p-2 w-full">
+                <Button variant="outline">
+                    <ArrowLeft /> Back to Blog
+                </Button>
+            </div>
+            <div className="m-auto flex flex-col justify-center items-center">
+                {children}
+            </div>
+        </main>
+    );
 }

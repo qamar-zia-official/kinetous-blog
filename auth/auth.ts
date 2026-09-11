@@ -1,14 +1,16 @@
 import { betterAuth } from "better-auth/minimal";
 import { drizzleAdapter } from "@better-auth/drizzle-adapter/relations-v2";
 import { db } from "@/db/index";
-import * as schema from "@/db/schemas/schema"
+import * as schema from "@/db/schemas/schema";
 
 export const auth = betterAuth({
+    trustedOrigins: ["https://blog.kinetous.com", "https://kinetous.com"],
     appName: "Kinetous Inventory MGMT",
     database: drizzleAdapter(db, {
         provider: "pg",
         schema,
-    }), emailAndPassword: {
+    }),
+    emailAndPassword: {
         enabled: true,
     },
     socialProviders: {
@@ -17,8 +19,8 @@ export const auth = betterAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRETE!,
         },
         github: {
-          clientId: process.env.GITHUB_CLIENT_ID!,
-          clientSecret: process.env.GITHUB_CLIENT_SECRETE!
-        }
+            clientId: process.env.GITHUB_CLIENT_ID!,
+            clientSecret: process.env.GITHUB_CLIENT_SECRETE!,
+        },
     },
 });

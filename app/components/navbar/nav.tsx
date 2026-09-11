@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MenuIcon } from "lucide-react";
+import { ExternalLink, MenuIcon } from "lucide-react";
 
 import {
     NavigationMenu,
@@ -49,6 +49,14 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+import ContactFormElement from "@/app/sections/header/form";
 
 // Retracts the primary row when the secondary (section) nav is hidden.
 // These match the row's own vertical padding/line-height, so they only
@@ -238,6 +246,28 @@ function DesktopLinks() {
                     </NavigationMenuLink>
                 ),
             )}
+            <Dialog>
+                <DialogTrigger
+                    className={cn(
+                        "rounded-full border-1 border-zinc-800 p-2 px-4",
+                    )}
+                >
+                    Lets Build Somehing
+                </DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle className={"text-center"}>
+                            How would you like to work with us?
+                        </DialogTitle>
+                    </DialogHeader>
+                    <ContactFormElement />
+                    <a href="https://kinetous.com" target="_blank">
+                        <Button size="lg" className="w-full">
+                            Visit Our Website <ExternalLink />
+                        </Button>
+                    </a>
+                </DialogContent>
+            </Dialog>
         </NavigationMenuList>
     );
 }

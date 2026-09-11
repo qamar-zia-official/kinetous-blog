@@ -142,6 +142,7 @@ export default function Editor({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [editor, slug]);
     const router = useRouter();
+    const user = AuthClient.useSession();
     const save = (status: "publish" | "draft") => {
         setSaveError(null);
         setSaveStatus("idle");
@@ -164,10 +165,12 @@ export default function Editor({
                 ? await updateBlog({
                       ...payload,
                       id: meta.values.id as string,
+                      authorId: user.data?.user.id || "qamar-zia",
                       coverImage: coverImageFile?.toString() || "",
                   })
                 : await addBlog({
                       ...payload,
+                      authorId: user.data?.user.id || "qamar-zia",
                       coverImage: coverImageFile?.toString() || "",
                   });
             router.push(`/publish/${meta.values.slug}`);

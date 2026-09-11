@@ -63,7 +63,10 @@ export const KEYWORDS = [
 
 export const AUTHORS = [
     { name: COMPANY_NAME, url: "https://www.linkedin.com/company/Kinetous/" },
-    { name: "Qamar Zia", url: "https://www.linkedin.com/in/qamar-zia-32389537b/" },
+    {
+        name: "Qamar Zia",
+        url: "https://www.linkedin.com/in/qamar-zia-32389537b/",
+    },
 ];
 
 export const SOCIAL_LINKS = AUTHORS.map((a) => a.url);
@@ -75,7 +78,7 @@ export const GOOGLE_SITE_VERIFICATION =
 // TODO: replace with the real business phone number before launch — schema.org
 // LocalBusiness/ProfessionalService listings with placeholder telephone
 // numbers can get flagged in manual reviews and hurt local-pack eligibility.
-export const BUSINESS_PHONE = "+92-300-XXXXXXX";
+export const BUSINESS_PHONE = "+92-324-6632409";
 
 export const BUSINESS_ADDRESS = {
     locality: "Lahore",

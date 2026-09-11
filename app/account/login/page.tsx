@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AuthClient } from "@/auth/auth-client";
@@ -13,14 +13,19 @@ import { BsGithub, BsGoogle } from "react-icons/bs";
 export default function LoginPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    // Sends people back to whatever protected page they were trying to
-    // reach — middleware.ts sets this when it redirects here.
     const next = searchParams.get("next") || "/account/dashboard";
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
     const [pending, setPending] = useState(false);
+
+    const { data, isPending } = AuthClient.useSession();
+    useEffect(() => {
+        if (!isPending && data?.user !== null) {
+            router.push(next);
+        }
+    }, [data, isPending]);
 
     async function handleEmailLogin(e: React.FormEvent) {
         e.preventDefault();
@@ -32,7 +37,10 @@ export default function LoginPage() {
         });
         setPending(false);
         if (signInError) {
-            setError(signInError.message ?? "Couldn't sign you in with those details.");
+            setError(
+                signInError.message ??
+                    "Couldn't sign you in with those details.",
+            );
             return;
         }
         router.push(next);
@@ -102,12 +110,22 @@ export default function LoginPage() {
                         </div>
 
                         {error && (
-                            <p className="text-sm text-destructive" role="alert">
+                            <p
+                                className="text-sm text-destructive"
+
+                                role="alert"
+                            >
                                 {error}
                             </p>
                         )}
 
-                        <Button type="submit" className="w-full" disabled={pending}>
+                        <Button
+                            type="submit"
+
+                            className="w-full"
+
+                            disabled={pending}
+                        >
                             {pending ? "Signing in…" : "Log in"}
                         </Button>
                     </form>

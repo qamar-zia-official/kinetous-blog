@@ -1,22 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
 
-// Everything under here requires a signed-in user. This does NOT check
-// post ownership (edit /publish/[blogSlug] for a post you don't own is
-// still blocked, but by the ownership check in db/blog/update-blog.ts and
-// remove-blog.ts, not here) — middleware runs on the edge and can't
-// affordably hit the DB to look up a post's authorId on every request. It
-// only answers "is someone logged in at all".
 const PROTECTED_PREFIXES = ["/publish", "/account/dashboard"];
 
-// Auth pages themselves must stay reachable while logged out, obviously.
 const PUBLIC_ACCOUNT_PATHS = [
     "/account/login",
     "/account/signup",
     "/account/error",
 ];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     const isPublicAccountPath = PUBLIC_ACCOUNT_PATHS.some((p) =>

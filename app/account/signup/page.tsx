@@ -10,6 +10,10 @@ import { InputGroup } from "@/components/ui/input-group";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AuthClient } from "@/auth/auth-client";
+import { Controller, useForm } from "react-hook-form";
+import z from "zod/v3";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 
 export default function Page() {
     const router = useRouter();
@@ -19,14 +23,7 @@ export default function Page() {
     const [error, setError] = useState<string | null>(null);
     const [pending, setPending] = useState(false);
 
-    // Previously this form rendered `<InputGroup><Input /></InputGroup>` with
-    // no name/email/password fields and no submit handler at all — filling
-    // it in and hitting enter did nothing. Now it actually calls
-    // better-auth's email sign-up and routes into the (now-real) dashboard.
-    async function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
-        setError(null);
-        setPending(true);
+    async function handleSubmit(e: z.infer<typeof formSchema>) {
         const { error: signUpError } = await AuthClient.signUp.email({
             name,
             email,
@@ -40,6 +37,22 @@ export default function Page() {
         router.push("/account/dashboard");
         router.refresh();
     }
+    const formSchema = z.object({
+        name: z
+            .string()
+            .min(3, { message: "Name should be at least 3 characters" }),
+        email: z.string().email({ message: "Email is required" }).nonempty(),
+        password: z.string().min(8, "Password should be at least 8 characters"),
+    });
+    type formSchemaType = z.infer<typeof formSchema>;
+    const form = useForm<formSchemaType>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+            name: "",
+        },
+    });
 
     return (
         <main className="h-screen flex justify-center items-center px-4">
@@ -49,10 +62,18 @@ export default function Page() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                     <div className="grid grid-cols-2 gap-2">
-                        <Button type="button" variant="outline" onClick={signInGoogle}>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={signInGoogle}
+                        >
                             <BsGoogle /> Google
                         </Button>
-                        <Button type="button" variant="outline" onClick={signInGithub}>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={signInGithub}
+                        >
                             <BsGithub /> Github
                         </Button>
                     </div>
@@ -63,52 +84,70 @@ export default function Page() {
                         <div className="h-px flex-1 bg-border" />
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-3">
-                        <div className="space-y-1">
-                            <Label htmlFor="name">Name</Label>
-                            <InputGroup>
-                                <Input
-                                    id="name"
-                                    required
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                />
-                            </InputGroup>
-                        </div>
-                        <div className="space-y-1">
-                            <Label htmlFor="email">Email</Label>
-                            <InputGroup>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    required
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                            </InputGroup>
-                        </div>
-                        <div className="space-y-1">
-                            <Label htmlFor="password">Password</Label>
-                            <InputGroup>
-                                <Input
-                                    id="password"
-                                    type="password"
-                                    autoComplete="new-password"
-                                    required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                            </InputGroup>
-                        </div>
+                    <form
+                        onSubmit={form.handleSubmit(handleSubmit)}
+                        className="space-y-3"
+                    >
+                        <Controller
+                            name="name"
+                            control={form.control}
+                            render={({ field, fieldState }) => {
+                                return (
+                                    <Field data-invalid={fieldState.invalid}>
+                                        <FieldLabel>Name</FieldLabel>
+                                        <Input {...field} />
+                                        {fieldState.invalid && (
+                                            <FieldError
+                                                errors={[fieldState.error]}
+                                            />
+                                        )}
+                                    </Field>
+                                );
+                            }}
+                        />
+                        <Controller
+                            name="email"
+                            control={form.control}
+                            render={({ field, fieldState }) => {
+                                return (
+                                    <Field data-invalid={fieldState.invalid}>
+                                        <FieldLabel>Email</FieldLabel>
+                                        <Input
+                                            {...field}
+                                            placeholder="e.g... qamar@kinetous.com"
+                                        />
+                                        {fieldState.invalid && (
+                                            <FieldError
+                                                errors={[fieldState.error]}
+                                            />
+                                        )}
+                                    </Field>
+                                );
+                            }}
+                        />
+                        <Controller
+                            name="password"
+                            control={form.control}
+                            render={({ field, fieldState }) => {
+                                return (
+                                    <Field data-invalid={fieldState.invalid}>
+                                        <FieldLabel>Password</FieldLabel>
+                                        <Input {...field} />
+                                        {fieldState.invalid && (
+                                            <FieldError
+                                                errors={[fieldState.error]}
+                                            />
+                                        )}
+                                    </Field>
+                                );
+                            }}
+                        />
 
-                        {error && (
-                            <p className="text-sm text-destructive" role="alert">
-                                {error}
-                            </p>
-                        )}
-
-                        <Button type="submit" className="w-full" disabled={pending}>
+                        <Button
+                            type="submit"
+                            className="w-full"
+                            disabled={pending}
+                        >
                             {pending ? "Creating account…" : "Sign up"}
                         </Button>
                     </form>

@@ -228,7 +228,7 @@ function DesktopLinks() {
                         <NavigationMenuTrigger className="flex items-center justify-center gap-2">
                             {link.label}
                         </NavigationMenuTrigger>
-                        <NavigationMenuContent className="z-100">
+                        <NavigationMenuContent className="z-1000">
                             {link.children}
                         </NavigationMenuContent>
                     </NavigationMenuItem>
@@ -320,24 +320,39 @@ export default function Navbar() {
                         <BrandMark />
                     </NavigationMenuItem>
                 </NavigationMenuList>
-                {isMobile ? <MobileNav /> : <DesktopLinks />}
-                {isPending ? (
-                    <div className="flex items-center gap-2 rounded-full p-2 border border-neutral-800">
-                        <Skeleton className="size-8 rounded-full" />
-
-                        <div className="space-y-1">
-                            <Skeleton className="h-3 w-20" />
+                <div className="flex justify-center items-center gap-2">
+                    {!isMobile && <DesktopLinks />}
+                    {isPending ? (
+                        <div className="flex items-center gap-2 rounded-full p-2 border border-neutral-800">
+                            <Skeleton className="size-8 rounded-full" />
+                            <div className="space-y-1">
+                                <Skeleton className="h-3 w-20" />
+                            </div>
                         </div>
-                    </div>
-                ) : data == null ? (
-                    <Link href="/account/signup">
-                        <Button>Get Started</Button>
-                    </Link>
-                ) : (
-                    <DropdownMenu>
-                        <DropdownMenuTrigger>
-                            <div className="flex items-center gap-2 rounded-full p-2 cursor-pointer hover:bg-neutral-800 border border-neutral-800">
-                                <Avatar>
+                    ) : data == null ? (
+                        <Link href="/account/signup">
+                            <Button>Get Started</Button>
+                        </Link>
+                    ) : (
+                        <DropdownMenu>
+                            <DropdownMenuTrigger>
+                                <div className="flex items-center gap-2 rounded-full p-2 cursor-pointer hover:bg-neutral-800 border border-neutral-800">
+                                    <Avatar>
+                                        <AvatarImage
+                                            src={data.user.image || undefined}
+                                        />
+                                        <AvatarFallback>
+                                            {data.user.name.charAt(0)}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    <p className="text-sm text-muted-foreground hidden md:block">
+                                        {data.user.name}
+                                    </p>
+                                </div>
+                            </DropdownMenuTrigger>
+
+                            <DropdownMenuContent className="p-4 mt-2 z-300 flex flex-col justify-center items-center">
+                                <Avatar size="lg">
                                     <AvatarImage
                                         src={data.user.image || undefined}
                                     />
@@ -345,44 +360,31 @@ export default function Navbar() {
                                         {data.user.name.charAt(0)}
                                     </AvatarFallback>
                                 </Avatar>
-                                <p className="text-sm text-muted-foreground hidden md:block">
-                                    {data.user.name}
-                                </p>
-                            </div>
-                        </DropdownMenuTrigger>
 
-                        <DropdownMenuContent className="p-4 mt-2 z-300 flex flex-col justify-center items-center">
-                            <Avatar size="lg">
-                                <AvatarImage
-                                    src={data.user.image || undefined}
-                                />
-                                <AvatarFallback>
-                                    {data.user.name.charAt(0)}
-                                </AvatarFallback>
-                            </Avatar>
+                                <div className="flex flex-col justify-center items-center">
+                                    <p className="text-sm text-muted-foreground">
+                                        {data.user.name}
+                                    </p>
 
-                            <div className="flex flex-col justify-center items-center">
-                                <p className="text-sm text-muted-foreground">
-                                    {data.user.name}
-                                </p>
+                                    <p className="text-sm text-muted-foreground">
+                                        {data.user.email}
+                                    </p>
 
-                                <p className="text-sm text-muted-foreground">
-                                    {data.user.email}
-                                </p>
-
-                                <Button
-                                    className="mt-2"
-                                    variant="destructive"
-                                    onClick={() => {
-                                        AuthClient.signOut();
-                                    }}
-                                >
-                                    Logout
-                                </Button>
-                            </div>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                )}
+                                    <Button
+                                        className="mt-2"
+                                        variant="destructive"
+                                        onClick={() => {
+                                            AuthClient.signOut();
+                                        }}
+                                    >
+                                        Logout
+                                    </Button>
+                                </div>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    )}
+                    {isMobile && <MobileNav />}
+                </div>
             </div>
         </NavigationMenu>
     );

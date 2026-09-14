@@ -41,7 +41,12 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { links } from "./nav-data";
 import logo from "@/public/logo mark white.svg";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+    Avatar,
+    AvatarBadge,
+    AvatarFallback,
+    AvatarImage,
+} from "@/components/ui/avatar";
 import { AuthClient } from "@/auth/auth-client";
 import {
     DropdownMenu,
@@ -57,6 +62,8 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import ContactFormElement from "@/app/sections/header/form";
+import { ButtonGroup } from "@/components/ui/button-group";
+import NavProfile from "./profile";
 
 // Retracts the primary row when the secondary (section) nav is hidden.
 // These match the row's own vertical padding/line-height, so they only
@@ -334,14 +341,13 @@ function SectionNav({
 
 export default function Navbar() {
     const isMobile = useIsMobile();
-    const { isPending, data } = AuthClient.useSession();
 
     return (
         <NavigationMenu
             className={cn(
                 "sticky z-100 mx-auto flex flex-col justify-between overflow-hidden",
                 "border-b border-white/30 bg-zinc-800/50/60 px-4 shadow-2xl",
-                "backdrop-blur-xl fixed top-0 left-0 right-0 backdrop-brightness-150 backdrop-saturate-150",
+                "backdrop-blur-xl sticky top-0 left-0 right-0 backdrop-brightness-150 backdrop-saturate-150",
             )}
         >
             <div className="mx-auto flex w-full max-w-300 items-center justify-between py-2">
@@ -352,67 +358,7 @@ export default function Navbar() {
                 </NavigationMenuList>
                 <div className="flex justify-center items-center gap-2">
                     {!isMobile && <DesktopLinks />}
-                    {isPending ? (
-                        <div className="flex items-center gap-2 rounded-full p-2 border border-neutral-800">
-                            <Skeleton className="size-8 rounded-full" />
-                            <div className="space-y-1">
-                                <Skeleton className="h-3 w-20" />
-                            </div>
-                        </div>
-                    ) : data == null ? (
-                        <Link href="/account/signup">
-                            <Button>Get Started</Button>
-                        </Link>
-                    ) : (
-                        <DropdownMenu>
-                            <DropdownMenuTrigger>
-                                <div className="flex items-center gap-2 rounded-full p-2 cursor-pointer hover:bg-neutral-800 border border-neutral-800">
-                                    <Avatar>
-                                        <AvatarImage
-                                            src={data.user.image || undefined}
-                                        />
-                                        <AvatarFallback>
-                                            {data.user.name.charAt(0)}
-                                        </AvatarFallback>
-                                    </Avatar>
-                                    <p className="text-sm text-muted-foreground hidden md:block">
-                                        {data.user.name}
-                                    </p>
-                                </div>
-                            </DropdownMenuTrigger>
-
-                            <DropdownMenuContent className="p-4 mt-2 z-300 flex flex-col justify-center items-center">
-                                <Avatar size="lg">
-                                    <AvatarImage
-                                        src={data.user.image || undefined}
-                                    />
-                                    <AvatarFallback>
-                                        {data.user.name.charAt(0)}
-                                    </AvatarFallback>
-                                </Avatar>
-
-                                <div className="flex flex-col justify-center items-center">
-                                    <p className="text-sm text-muted-foreground">
-                                        {data.user.name}
-                                    </p>
-
-                                    <p className="text-sm text-muted-foreground">
-                                        {data.user.email}
-                                    </p>
-
-                                    <Button
-                                        className="mt-2"
-                                        variant="destructive"
-                                        onClick={() => {
-                                            AuthClient.signOut();
-                                        }}
-                                    >
-                                        Logout
-                                    </Button>
-                                </div>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    )}
+                    <NavProfile />
                     {isMobile && <MobileNav />}
                 </div>
             </div>

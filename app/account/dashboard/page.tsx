@@ -8,6 +8,7 @@ import { AuthClient } from "@/auth/auth-client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { blogTable } from "@/db/schemas/schema";
+import { ButtonGroup } from "@/components/ui/button-group";
 
 export default function DashboardPage() {
     const { data, isPending } = AuthClient.useSession();
@@ -15,17 +16,24 @@ export default function DashboardPage() {
         (typeof blogTable.$inferSelect)[] | null
     >();
     const router = useRouter();
+
     useEffect(() => {
+        // Wait for the session to resolve before doing anything.
+        if (isPending) return;
+
+        if (data == null) {
+            router.push("/account/signup");
+            return;
+        }
+
         async function getPosts() {
-            if (!isPending && data == null) {
-                router.push("/account/signup");
-                return;
-            }
-            const post = await getPostsByAuthor(data?.user.id ?? "");
+            const post = await getPostsByAuthor(data!.user.id);
             setPosts(post);
         }
         getPosts();
     }, [data, isPending]);
+
+    const canPublish = !!data?.user.emailVerified;
 
     return (
         <main className="mx-auto max-w-4xl px-6 py-16 space-y-8 min-h-screen flex pt-28 items-center flex-col w-full gap-4">
@@ -36,14 +44,27 @@ export default function DashboardPage() {
                     </h1>
                     <p className="text-muted-foreground">{data?.user.email}</p>
                 </div>
-                <LogoutButton />
+                <div className="flex flex-col">
+                    <ButtonGroup>
+                        <LogoutButton />
+                        <Button>
+                            <Link href="/account/edit">Edit</Link>
+                        </Button>
+                    </ButtonGroup>
+                </div>
             </div>
 
             <div className="flex items-center justify-between w-full">
                 <h2 className="text-xl font-semibold">Your posts</h2>
-                <Button>
-                    <Link href="/publish/new">New post</Link>
-                </Button>
+                {canPublish ? (
+                    <Button>
+                        <Link href="/publish/new">New post</Link>
+                    </Button>
+                ) : (
+                    <Button disabled title="Verify your email to publish">
+                        New post
+                    </Button>
+                )}
             </div>
 
             {posts?.length === 0 ? (

@@ -19,10 +19,14 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
     const [pending, setPending] = useState(false);
+    const [resendState, setResendState] = useState<
+        "idle" | "sending" | "sent"
+    >("idle");
 
     const { data, isPending } = AuthClient.useSession();
     useEffect(() => {
-        if (!isPending && data?.user !== null) {
+        // Only redirect once we actually have a logged-in user.
+        if (!isPending && data?.user) {
             router.push(next);
         }
     }, [data, isPending]);
@@ -55,8 +59,22 @@ export default function LoginPage() {
         });
     }
 
+    async function handleResendVerification() {
+        if (!email) return;
+        setResendState("sending");
+        try {
+            await AuthClient.sendVerificationEmail({
+                email,
+                callbackURL: "/account/welcome",
+            });
+            setResendState("sent");
+        } catch {
+            setResendState("idle");
+        }
+    }
+
     return (
-        <main className="min-h-screen flex justify-center items-center px-4">
+        <main className="min-h-screen flex flex-col justify-center items-center px-4">
             <Card className="w-full max-w-sm">
                 <CardHeader>
                     <CardTitle>Log in</CardTitle>
@@ -110,22 +128,31 @@ export default function LoginPage() {
                         </div>
 
                         {error && (
-                            <p
-                                className="text-sm text-destructive"
-
-                                role="alert"
-                            >
+                            <p className="text-sm text-destructive" role="alert">
                                 {error}
                             </p>
                         )}
 
-                        <Button
-                            type="submit"
+                        {error === "Email not verified" && (
+                            <p className="text-sm text-muted-foreground">
+                                {resendState === "sent" ? (
+                                    "Verification email sent — check your inbox."
+                                ) : (
+                                    <button
+                                        type="button"
+                                        className="underline disabled:opacity-50"
+                                        onClick={handleResendVerification}
+                                        disabled={resendState === "sending"}
+                                    >
+                                        {resendState === "sending"
+                                            ? "Sending…"
+                                            : "Resend verification email"}
+                                    </button>
+                                )}
+                            </p>
+                        )}
 
-                            className="w-full"
-
-                            disabled={pending}
-                        >
+                        <Button type="submit" className="w-full" disabled={pending}>
                             {pending ? "Signing in…" : "Log in"}
                         </Button>
                     </form>

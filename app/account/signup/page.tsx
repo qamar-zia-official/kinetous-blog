@@ -5,10 +5,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BsGithub, BsGoogle } from "react-icons/bs";
-import { signInGoogle, signInGithub } from "./signup";
-import { InputGroup } from "@/components/ui/input-group";
+import { signInGoogle, signInGithub } from "../signup";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { AuthClient } from "@/auth/auth-client";
 import { Controller, useForm } from "react-hook-form";
 import z from "zod/v3";
@@ -17,26 +15,10 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 
 export default function Page() {
     const router = useRouter();
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState<string | null>(null);
     const [pending, setPending] = useState(false);
+    const [error, setError] = useState<string>();
+    const authClient = AuthClient;
 
-    async function handleSubmit(e: z.infer<typeof formSchema>) {
-        const { error: signUpError } = await AuthClient.signUp.email({
-            name,
-            email,
-            password,
-        });
-        setPending(false);
-        if (signUpError) {
-            setError(signUpError.message ?? "Couldn't create your account.");
-            return;
-        }
-        router.push("/account/dashboard");
-        router.refresh();
-    }
     const formSchema = z.object({
         name: z
             .string()
@@ -53,6 +35,38 @@ export default function Page() {
             name: "",
         },
     });
+
+    async function handleSubmit(e: z.infer<typeof formSchema>) {
+        setError(undefined);
+        setPending(true);
+        try {
+            const res = await authClient.signUp.email(
+                {
+                    name: e.name,
+                    email: e.email,
+                    password: e.password,
+                },
+                {
+                    onSuccess: () => {
+                        router.push(
+                            `/account/login?email=${encodeURIComponent(e.email)}&verified=false`,
+                        );
+                    },
+                },
+            );
+            if (res.error) {
+                setError(res.error.message);
+            }
+        } catch (err) {
+            setError(
+                err instanceof Error
+                    ? err.message
+                    : "Something went wrong creating your account.",
+            );
+        } finally {
+            setPending(false);
+        }
+    }
 
     return (
         <main className="h-screen flex justify-center items-center px-4">
@@ -132,7 +146,7 @@ export default function Page() {
                                 return (
                                     <Field data-invalid={fieldState.invalid}>
                                         <FieldLabel>Password</FieldLabel>
-                                        <Input {...field} />
+                                        <Input type="password" {...field} />
                                         {fieldState.invalid && (
                                             <FieldError
                                                 errors={[fieldState.error]}
@@ -160,6 +174,11 @@ export default function Page() {
                     </p>
                 </CardContent>
             </Card>
+            {error && (
+                <p className="text-sm text-destructive text-center mt-4">
+                    {error}
+                </p>
+            )}
         </main>
     );
 }

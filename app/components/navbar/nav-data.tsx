@@ -1,14 +1,5 @@
-import { Card } from "@/components/ui/card";
+import { HomeIcon } from "lucide-react";
 import {
-    Contact,
-    Contact2,
-    ExternalLink,
-    HomeIcon,
-    Projector,
-} from "lucide-react";
-import { FaBlog, FaShopify } from "react-icons/fa";
-import {
-    MdShoppingCart,
     MdDashboard,
     MdSupportAgent,
     MdStorefront,

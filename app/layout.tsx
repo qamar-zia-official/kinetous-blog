@@ -29,6 +29,7 @@ import {
     BUSINESS_ADDRESS,
     BUSINESS_PHONE,
 } from "@/lib/seo-config";
+import { ToastProvider } from "@/components/ui/toast";
 
 // Load Satoshi Locally
 const clashgrotestSans = localFont({
@@ -210,17 +211,19 @@ export default function RootLayout({
   )`,
                     }}
                 ></div>
-                <BotProvider>
-                    <NavigationProvider>
-                        <Navbar />
-                        <ViewTransition>{children}</ViewTransition>
-                        <Footer2
-                            logo={logo}
-                            copyright="Kinetous"
-                            description="Kinetous - FullStack AI Native E-Commmerce Product and Automation studio"
-                        ></Footer2>
-                    </NavigationProvider>
-                </BotProvider>
+                <ToastProvider>
+                    <BotProvider>
+                        <NavigationProvider>
+                            <Navbar />
+                            <ViewTransition>{children}</ViewTransition>
+                            <Footer2
+                                logo={logo}
+                                copyright="Kinetous"
+                                description="Kinetous - FullStack AI Native E-Commmerce Product and Automation studio"
+                            ></Footer2>
+                        </NavigationProvider>
+                    </BotProvider>
+                </ToastProvider>
             </body>
         </html>
     );

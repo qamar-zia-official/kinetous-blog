@@ -4,26 +4,10 @@ import { Undo2, Redo2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
+import { Toolbar } from "@base-ui/react/toolbar";
+import { Toggle } from "@/components/ui/toggle";
 
 export default function UndoRedoGroup({ editor }: { editor: Editor }) {
     return (
-        <ButtonGroup>
-            <Button
-                size="icon"
-                variant="ghost"
-                disabled={!editor.can().undo()}
-                onClick={() => editor.chain().focus().undo().run()}
-            >
-                <Undo2 className="size-4" />
-            </Button>
-            <Button
-                size="icon"
-                variant="ghost"
-                disabled={!editor.can().redo()}
-                onClick={() => editor.chain().focus().redo().run()}
-            >
-                <Redo2 className="size-4" />
-            </Button>
-        </ButtonGroup>
     );
 }

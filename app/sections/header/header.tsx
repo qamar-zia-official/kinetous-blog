@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import * as motion from "motion/react-client";
 import SectionHeading2 from "../section-heading";
 import { GrArticle } from "react-icons/gr";
-import Strip from "./strip";
 import Silk from "@/components/Silk";
 import ContactFormElement from "./form";
 import { ExternalLink } from "lucide-react";

@@ -22,24 +22,10 @@ import { EDITOR_DEFAULT_CONTENT } from "./constants";
 import { useCommandPaletteShortcut } from "./use-command-palette-shortcut";
 import { ArticleMetaForm } from "./article-meta-form";
 import { EditorFooter } from "./editor-footer";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { blogTable } from "@/db/schemas/schema";
 import { EditIcon } from "lucide-react";
 import { AuthClient } from "@/auth/auth-client";
-import {
-    Card,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import Image from "next/image";
-import {
-    Avatar,
-    AvatarBadge,
-    AvatarFallback,
-    AvatarImage,
-} from "@/components/ui/avatar";
 
 export default function Editor({
     params,
@@ -75,7 +61,6 @@ export default function Editor({
     // typing into a form that will silently reject on save.
     const { data: session } = AuthClient.useSession();
     const [isForeignPost, setIsForeignPost] = useState(false);
-    const { isPending, data, error } = AuthClient.useSession();
 
     useEffect(() => {
         async function get() {
@@ -348,7 +333,6 @@ export default function Editor({
 
             <div className="flex-1">
                 <div className="mx-auto w-full min-h-screen max-w-195 px-12 py-16">
-                    <MyBubbleMenu editor={editor} />
                     <EditorContent editor={editor} />
                 </div>
             </div>

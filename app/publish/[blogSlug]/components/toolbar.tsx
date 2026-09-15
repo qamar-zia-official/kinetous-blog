@@ -1,6 +1,5 @@
 import { type Editor } from "@tiptap/react";
 
-import UndoRedoGroup from "./undo-redo-group";
 import { Toolbar as TLB } from "@base-ui/react/toolbar";
 import TextStyleDropdown from "./text-style-dropdown";
 import InlineFormattingGroup from "./inline-formatting-group";

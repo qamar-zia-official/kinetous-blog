@@ -14,6 +14,7 @@ import ColorDropdown from "./color-dropdown";
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Redo2, Undo2 } from "lucide-react";
+import { ButtonGroup } from "@/components/ui/button-group";
 
 export default function Toolbar({
     editor,
@@ -42,23 +43,25 @@ export default function Toolbar({
         return () => document.removeEventListener("keydown", handleKeyDown);
     }, [editor]);
     return (
-        <TLB.Root className="flex z-100 h-14 items-center gap-1 overflow-x-auto border-b bg-zinc/80 px-3 backdrop-blur-xl w-full rounded-full box-shadow-2xl">
+        <TLB.Root className="flex z-100 h-14  backdrop-brightness-200 items-center gap-1 overflow-x-auto border-b bg-zinc/80 px-3 backdrop-blur-xl w-fit rounded-full box-shadow-2xl">
             <TLB.Group>
-                <TLB.Button
-                    ref={ref}
-                    render={<Button variant="ghost" />}
-                    disabled={!editor.can().undo()}
-                    onClick={() => editor.chain().focus().undo().run()}
-                >
-                    <Undo2 className="size-4" />
-                </TLB.Button>
-                <TLB.Button
-                    disabled={!editor.can().redo()}
-                    render={<Button variant="ghost" />}
-                    onClick={() => editor.chain().focus().redo().run()}
-                >
-                    <Redo2 className="size-4" />
-                </TLB.Button>
+                <ButtonGroup>
+                    <TLB.Button
+                        ref={ref}
+                        render={<Button variant="secondary" />}
+                        disabled={!editor.can().undo()}
+                        onClick={() => editor.chain().focus().undo().run()}
+                    >
+                        <Undo2 className="size-4" />
+                    </TLB.Button>
+                    <TLB.Button
+                        disabled={!editor.can().redo()}
+                        render={<Button variant="secondary" />}
+                        onClick={() => editor.chain().focus().redo().run()}
+                    >
+                        <Redo2 className="size-4" />
+                    </TLB.Button>
+                </ButtonGroup>
             </TLB.Group>
             <TLB.Separator className="bg-white w-1 border-white" />
 

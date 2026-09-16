@@ -62,7 +62,7 @@ export default function AlignmentDropdown({ editor }: { editor: Editor }) {
         <DropdownMenu>
             <DropdownMenuTrigger
                 render={
-                    <Toolbar.Button render={<Button variant="ghost" />}>
+                    <Toolbar.Button render={<Button variant="secondary" />}>
                         <CurrentIcon className="size-4" />
                         Align
                         <ChevronDown className="size-4 opacity-60" />

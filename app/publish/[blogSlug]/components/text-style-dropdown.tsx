@@ -114,7 +114,7 @@ export default function TextStyleDropdown({ editor }: { editor: Editor }) {
                 render={
                     <DropdownMenuTrigger
                         render={
-                            <Button variant="ghost">
+                            <Button variant="secondary">
                                 Format As
                                 <ChevronDown />
                             </Button>

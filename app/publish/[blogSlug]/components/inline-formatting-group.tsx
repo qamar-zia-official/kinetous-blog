@@ -79,7 +79,7 @@ export default function InlineFormattingGroup({ editor }: { editor: Editor }) {
                     const Icon = item.icon;
                     return (
                         <Toolbar.Button
-                            render={<Button variant="ghost" />}
+                            render={<Button variant="secondary" />}
                             key={item.name}
                             onClick={() => item.action(editor)}
                         >

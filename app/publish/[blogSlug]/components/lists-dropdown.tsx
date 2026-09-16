@@ -52,7 +52,7 @@ export default function ListsDropdown({ editor }: { editor: Editor }) {
             <DropdownMenuTrigger
                 render={
                     <Toolbar.Button
-                        render={<Button variant="ghost" />}
+                        render={<Button variant="secondary" />}
                         className="gap-2"
                     >
                         <CurrentIcon className="size-4" />

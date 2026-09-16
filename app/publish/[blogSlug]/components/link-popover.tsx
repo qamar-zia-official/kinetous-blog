@@ -62,7 +62,7 @@ export default function LinkPopover({ editor }: { editor: Editor }) {
         <Popover>
             <PopoverTrigger
                 render={
-                    <Toolbar.Button render={<Button variant="ghost" />}>
+                    <Toolbar.Button render={<Button variant="secondary" />}>
                         <Link2 className="size-4" />
                     </Toolbar.Button>
                 }

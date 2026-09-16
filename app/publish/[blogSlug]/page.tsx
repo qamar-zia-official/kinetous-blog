@@ -190,7 +190,7 @@ export default function Editor({
                 slug={slug}
             />
 
-            <header className="flex  z-50 h-14 fixed top-16 items-center justify-between border-b border-border px-6 left-0 right-0">
+            <header className="flex  z-50 h-14 fixed top-16 items-center justify-center px-6 left-0 right-0 bg-none">
                 <Toolbar
                     save={save}
                     editor={editor}
@@ -328,7 +328,6 @@ export default function Editor({
                         }}
                     />
                 </div>
-                <div></div>
             </div>
 
             <div className="flex-1">

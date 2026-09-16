@@ -8,6 +8,8 @@ import Image from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
 import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
+import { TaskList } from "@tiptap/extension-task-list";
+import TaskItem from "@tiptap/extension-task-item";
 import TextAlign from "@tiptap/extension-text-align";
 import { TextStyle } from "@tiptap/extension-text-style";
 import Typography from "@tiptap/extension-typography";
@@ -32,6 +34,8 @@ export const documentExtensions = [
     BlockMath,
     Mathematics,
     InlineMath,
+    TaskList,
+    TaskItem,
     StarterKit.configure({
         codeBlock: false,
     }),

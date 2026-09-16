@@ -39,7 +39,7 @@ export default function InsertDropdown({ editor }: { editor: Editor }) {
         <DropdownMenu>
             <DropdownMenuTrigger
                 render={
-                    <Toolbar.Button render={<Button variant="outline" />}>
+                    <Toolbar.Button render={<Button variant="secondary" />}>
                         Insert
                         <ChevronDown className="size-4 opacity-60" />
                     </Toolbar.Button>

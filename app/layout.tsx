@@ -5,7 +5,6 @@ import "./custom.css";
 import logo from "@/public/logo black circle.svg";
 import { ViewTransition } from "react";
 import localFont from "next/font/local";
-import BotProvider from "@/app/components/bot/bot-provider";
 import { Inter } from "next/font/google";
 import StructuredData from "@/components/seo/StructuredData";
 import { Footer2 } from "@/components/footer2";
@@ -30,6 +29,7 @@ import {
     BUSINESS_PHONE,
 } from "@/lib/seo-config";
 import { ToastProvider } from "@/components/ui/toast";
+import ChatWidget from "./components/bot/bot";
 
 // Load Satoshi Locally
 const clashgrotestSans = localFont({
@@ -212,17 +212,16 @@ export default function RootLayout({
                     }}
                 ></div>
                 <ToastProvider>
-                    <BotProvider>
-                        <NavigationProvider>
-                            <Navbar />
-                            <ViewTransition>{children}</ViewTransition>
-                            <Footer2
-                                logo={logo}
-                                copyright="Kinetous"
-                                description="Kinetous - FullStack AI Native E-Commmerce Product and Automation studio"
-                            ></Footer2>
-                        </NavigationProvider>
-                    </BotProvider>
+                    <NavigationProvider>
+                        <Navbar />
+                        <ViewTransition>{children}</ViewTransition>
+                        <Footer2
+                            logo={logo}
+                            copyright="Kinetous"
+                            description="Kinetous - FullStack AI Native E-Commmerce Product and Automation studio"
+                        ></Footer2>
+                    </NavigationProvider>
+                    <ChatWidget />
                 </ToastProvider>
             </body>
         </html>

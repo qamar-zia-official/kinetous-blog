@@ -6,7 +6,7 @@ import { Resend } from "resend";
 const mail = new Resend(process.env.RESEND_API_KEY!);
 
 export const auth = betterAuth({
-    trustedOrigins: ["https://blog.kinetous.com", "https://kinetous.com"],
+    trustedOrigins: ["https://*.kinetous.com", "https://kinetous.com"],
     appName: "Kinetous Inventory MGMT",
     database: drizzleAdapter(db, {
         provider: "pg",
